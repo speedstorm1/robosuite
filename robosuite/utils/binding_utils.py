@@ -73,7 +73,6 @@ class MjRenderContext:
         self.sim = sim
         self.offscreen = offscreen
         self.device_id = device_id
-
         # setup GL context with defaults for now
         self.gl_ctx = GLContext(max_width=max_width, max_height=max_height, device_id=self.device_id)
         self.gl_ctx.make_current()
@@ -1123,12 +1122,16 @@ class MjSim:
             camera_id = self.model.camera_name2id(camera_name)
 
         assert mode == "offscreen", "only offscreen supported for now"
-        assert self._render_context_offscreen is not None
+        # assert self._render_context_offscreen is not None
         with _MjSim_render_lock:
-            self._render_context_offscreen.render(
+            if self._render_context_offscreen is None:
+                render_context = MjRenderContextOffscreen(self, device_id=device_id)
+            else:
+                render_context = self._render_context_offscreen
+            render_context.render(
                 width=width, height=height, camera_id=camera_id, segmentation=segmentation
             )
-            return self._render_context_offscreen.read_pixels(width, height, depth=depth, segmentation=segmentation)
+            return render_context.read_pixels(width, height, depth=depth, segmentation=segmentation)
 
     def add_render_context(self, render_context):
         assert render_context.offscreen
