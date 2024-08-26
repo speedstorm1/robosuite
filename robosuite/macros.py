@@ -32,11 +32,11 @@ IMAGE_CONVENTION = "opengl"  # Options are {"opengl", "opencv"}
 # so we skip concatenating all images together by default, unless this flag is set to True
 CONCATENATE_IMAGES = False
 
-MUJOCO_GPU_RENDERING = True
+MUJOCO_GPU_RENDERING = False
 
 # Spacemouse settings. Used by SpaceMouse class in robosuite/devices/spacemouse.py
-SPACEMOUSE_VENDOR_ID = 9583
-SPACEMOUSE_PRODUCT_ID = 50734
+SPACEMOUSE_VENDOR_ID = 1133
+SPACEMOUSE_PRODUCT_ID = 50726
 
 # If LOGGING LEVEL is set to None, the logger will be turned off
 CONSOLE_LOGGING_LEVEL = "WARN"
